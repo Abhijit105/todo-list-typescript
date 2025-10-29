@@ -6,3 +6,8 @@
   --primary: #f573d4;
   --secondary: #61a4b2;
 }
+
+body {
+  background-color: var(--bgprimary);
+  font-family: "JetBrains Mono SemiBold", serif;
+}
