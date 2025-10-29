@@ -1,10 +1,14 @@
-function createTodoTextareaEl(
+function createEl(
   parent: HTMLElement,
+  elementTag: string,
   attributes?: Record<string, string>,
   textContent?: string,
-): HTMLElement {
-  const el = document.createElement("textarea");
+): HTMLElement | null {
+  if (!parent || !elementTag) {
+    return null;
+  }
 
+  const el = document.createElement(elementTag);
   if (attributes) {
     for (const key of Object.keys(attributes)) {
       el.setAttribute(key, attributes[key]);
@@ -19,4 +23,4 @@ function createTodoTextareaEl(
   return el;
 }
 
-export { createTodoTextareaEl };
+export { createEl };
