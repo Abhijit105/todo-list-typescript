@@ -1,22 +1,22 @@
-function createTodoInputEl(
+function createTodoTextareaEl(
   parent: HTMLElement,
   attributes?: Record<string, string>,
   textContent?: string,
 ): HTMLElement {
-  const todoInputEl = document.createElement("input");
+  const el = document.createElement("textarea");
 
   if (attributes) {
     for (const key of Object.keys(attributes)) {
-      todoInputEl.setAttribute(key, attributes[key]);
+      el.setAttribute(key, attributes[key]);
     }
   }
 
   if (textContent) {
-    todoInputEl!.textContent = textContent;
+    el!.textContent = textContent;
   }
 
-  parent.appendChild(todoInputEl);
-  return todoInputEl;
+  parent.appendChild(el);
+  return el;
 }
 
-export { createTodoInputEl };
+export { createTodoTextareaEl };

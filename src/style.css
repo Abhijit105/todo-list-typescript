@@ -25,3 +25,34 @@ header > h1 {
   text-align: center;
   text-decoration: underline;
 }
+
+main {
+  width: 1000px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.todo-input {
+  padding: 8px 16px;
+  background-color: var(--bgsecondary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--textprimary);
+  border: none;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.todo-input:focus,
+.todo-input:focus-visible {
+  outline: 2px solid var(--primary);
+}

@@ -1,4 +1,4 @@
-import { createTodoInputEl } from "./view.ts";
+import { createTodoTextareaEl } from "./view.ts";
 
 const mainEl = document.querySelector("main");
 
@@ -7,7 +7,13 @@ function init(): void {
     return;
   }
 
-  const todoInputEl = createTodoInputEl(mainEl);
+  const todoTextareaElAttributes = {
+    type: "text",
+    name: "todo",
+    id: "todo-input",
+    class: "todo-input",
+  };
+  createTodoTextareaEl(mainEl, todoTextareaElAttributes);
 }
 
 init();
