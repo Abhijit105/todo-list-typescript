@@ -33,6 +33,15 @@ main {
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
+  gap: 16px;
+}
+
+.todo-add {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .todo-input {
@@ -54,5 +63,33 @@ main {
 
 .todo-input:focus,
 .todo-input:focus-visible {
+  outline: 2px solid var(--primary);
+}
+
+.btn {
+  padding: 8px 16px;
+  background-color: var(--primary);
+  border-radius: 8px;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--bgsecondary);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  filter: hue-rotate(30deg);
+  border: 2px inset solid var(--primary);
+}
+
+.btn:active {
   outline: 2px solid var(--primary);
 }

@@ -7,13 +7,23 @@ function init(): void {
     return;
   }
 
+  const todoAddElAttributes = {
+    class: "todo-add",
+  };
+  const todoAddEl = createEl(mainEl, "div", todoAddElAttributes);
+
   const todoTextareaElAttributes = {
     type: "text",
     name: "todo",
     id: "todo-input",
     class: "todo-input",
   };
-  createEl(mainEl, "textarea", todoTextareaElAttributes);
+  createEl(todoAddEl, "textarea", todoTextareaElAttributes);
+
+  const todoBtnAttributes = {
+    class: "btn",
+  };
+  createEl(todoAddEl, "button", todoBtnAttributes, "Add Todo");
 }
 
 init();

@@ -1,5 +1,5 @@
 function createEl(
-  parent: HTMLElement,
+  parent: HTMLElement | null,
   elementTag: string,
   attributes?: Record<string, string>,
   textContent?: string,
