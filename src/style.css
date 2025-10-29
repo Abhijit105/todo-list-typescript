@@ -11,3 +11,17 @@ body {
   background-color: var(--bgprimary);
   font-family: "JetBrains Mono SemiBold", serif;
 }
+
+header {
+  width: 1200px;
+  margin: auto;
+}
+
+header > h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  color: var(--textprimary);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: underline;
+}
