@@ -44,7 +44,7 @@ main {
   gap: 8px;
 }
 
-.todo-input {
+.todo-textarea {
   padding: 8px 16px;
   background-color: var(--bgsecondary);
   border-radius: 8px;
@@ -61,8 +61,8 @@ main {
   transition: all 0.2s ease-in-out;
 }
 
-.todo-input:focus,
-.todo-input:focus-visible {
+.todo-textarea:focus,
+.todo-textarea:focus-visible {
   outline: 2px solid var(--primary);
 }
 
