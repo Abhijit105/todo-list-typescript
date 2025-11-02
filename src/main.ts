@@ -1,8 +1,7 @@
 import Todos from "./todos.ts";
 
-const { getTodos, setTodos, pushTodo } = Todos;
+const { getTodos, setTodos, pushTodo, renderTodos } = Todos;
 
-const todosDivEl = document.querySelector(".todos");
 const todoTextarea = document.getElementById("todo-textarea");
 const todoAddBtn = document.getElementById("todo-add");
 
@@ -17,7 +16,15 @@ const handleAddTodo = function (): void {
     return;
   }
 
+  const todos = getTodos();
+  if (todos.includes(todoText)) {
+    return;
+  }
+
   pushTodo(todoText);
+  renderTodos();
+  // @ts-ignore
+  todoTextarea!.value = "";
 };
 
 todoAddBtn!.addEventListener("click", handleAddTodo);

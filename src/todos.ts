@@ -1,8 +1,15 @@
 function setupTodos() {
-  let todos: Array<string> = [];
+  let todos: {
+    previous: Array<string>;
+    current: Array<string>;
+  } = {
+    previous: [],
+    current: [],
+  };
+  const todosDivEl = document.querySelector(".todos");
 
   function getTodos(): Array<string> {
-    return todos;
+    return todos.current;
   }
 
   function setTodos(
@@ -12,20 +19,46 @@ function setupTodos() {
       return;
     }
 
+    todos.previous = todos.current.slice();
+
     if (Array.isArray(callback) && callback.length > 0) {
-      todos = callback;
+      todos.current = callback;
     }
 
     if (typeof callback === "function") {
-      todos = callback(todos);
+      todos.current = callback(todos.current);
     }
   }
 
   function pushTodo(newTodo: string): number {
-    return todos.push(newTodo);
+    todos.previous = todos.current.slice();
+    return todos.current.push(newTodo);
   }
 
-  return { getTodos, setTodos, pushTodo };
+  function renderTodos(): void {
+    if (!todos || !Array.isArray(todos.current) || todos.current.length === 0) {
+      return;
+    }
+
+    if (
+      todos.current.every(
+        (todo: string, index: number) => todo === todos.previous[index],
+      )
+    ) {
+      return;
+    }
+
+    todosDivEl!.innerHTML = "";
+
+    todos.current.forEach((todo: string): void => {
+      const todoDivEl = document.createElement("div");
+      todoDivEl!.setAttribute("class", "todo");
+      todoDivEl!.textContent = todo;
+      todosDivEl!.appendChild(todoDivEl);
+    });
+  }
+
+  return { getTodos, setTodos, pushTodo, renderTodos };
 }
 
 const Todos = setupTodos();
