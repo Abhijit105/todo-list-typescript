@@ -66,6 +66,14 @@ main {
   outline: 2px solid var(--primary);
 }
 
+.todo-textarea::placeholder {
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 300;
+  color: var(--textsecondary);
+}
+
 .btn {
   padding: 8px 16px;
   background-color: var(--primary);

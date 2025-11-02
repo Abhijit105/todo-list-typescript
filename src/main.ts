@@ -1,16 +1,29 @@
-import { createTodoAddDivEl } from "./view.ts";
+import Todos from "./todos.ts";
 
-const mainEl = document.querySelector("main");
-const todoAddDivEl = createTodoAddDivEl();
+const { getTodos, setTodos, pushTodo } = Todos;
 
-function init(): void {
-  if (!mainEl) {
+const todosDivEl = document.querySelector(".todos");
+const todoTextarea = document.getElementById("todo-textarea");
+const todoAddBtn = document.getElementById("todo-add");
+
+const handleAddTodo = function (): void {
+  if (!todoTextarea) {
     return;
   }
 
-  if (todoAddDivEl) {
-    mainEl!.appendChild(todoAddDivEl);
+  // @ts-ignore
+  const todoText = todoTextarea.value as string;
+  if (!todoText.trim()) {
+    return;
   }
-}
 
-init();
+  pushTodo(todoText);
+};
+
+todoAddBtn!.addEventListener("click", handleAddTodo);
+todoTextarea!.addEventListener("keydown", (event: KeyboardEvent) => {
+  const { key } = event;
+  if (key === "Enter") {
+    handleAddTodo();
+  }
+});
