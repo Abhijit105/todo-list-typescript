@@ -25,6 +25,7 @@ const handleAddTodo = function (): void {
   renderTodos();
   // @ts-ignore
   todoTextarea!.value = "";
+  todoTextarea!.blur();
 };
 
 todoAddBtn!.addEventListener("click", handleAddTodo);

@@ -91,12 +91,15 @@ main {
   border: 1px solid var(--textprimary);
   padding: 8px;
   border-radius: 8px;
+}
 
+.todo-text {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
   color: var(--textprimary);
   text-align: left;
+  flex: 1;
 }
 
 .btn {
@@ -109,7 +112,7 @@ main {
   justify-content: center;
   font-family: inherit;
   text-align: center;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.4;
   color: var(--bgsecondary);
