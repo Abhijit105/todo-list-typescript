@@ -85,8 +85,9 @@ main {
 
 .todo {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
   gap: 8px;
   border: 1px solid var(--textprimary);
   padding: 8px;
@@ -100,6 +101,14 @@ main {
   color: var(--textprimary);
   text-align: left;
   flex: 1;
+}
+
+.todo-buttons {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .btn {
