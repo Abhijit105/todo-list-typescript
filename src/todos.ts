@@ -1,19 +1,22 @@
+import setupTodo from "./todo.ts";
+import type { Todo } from "./todo.ts";
+
 function setupTodos() {
   let todos: {
-    previous: Array<string>;
-    current: Array<string>;
+    previous: Array<Todo>;
+    current: Array<Todo>;
   } = {
     previous: [],
     current: [],
   };
   const todosDivEl = document.querySelector(".todos");
 
-  function getTodos(): Array<string> {
+  function getTodos(): Array<Todo> {
     return todos.current;
   }
 
   function setTodos(
-    callback: Array<string> | ((previous: Array<string>) => Array<string>),
+    callback: Array<Todo> | ((previous: Array<Todo>) => Array<Todo>),
   ): void {
     if (!callback || (Array.isArray(callback) && callback.length === 0)) {
       return;
@@ -30,8 +33,10 @@ function setupTodos() {
     }
   }
 
-  function pushTodo(newTodo: string): number {
+  function pushTodo(newTodoText: string): number {
     todos.previous = todos.current.slice();
+    const newTodo = setupTodo();
+    newTodo.createTodo(newTodoText);
     return todos.current.push(newTodo);
   }
 
@@ -44,10 +49,9 @@ function setupTodos() {
   }
 
   function removeTodo(index: number): void {
-    todos.previous = todos.current.slice();
     setTodos(
-      (previous: Array<string>): Array<string> =>
-        previous.filter((_: string, i: number): boolean => i !== index),
+      (previous: Array<Todo>): Array<Todo> =>
+        previous.filter((_: Todo, i: number): boolean => i !== index),
     );
     renderTodos();
   }
@@ -59,10 +63,12 @@ function setupTodos() {
 
     if (
       todos.current.length === todos.previous.length &&
-      todos.current.every(
-        (todo: string, index: number) => todo === todos.previous[index],
-      )
+      todos.current.every((todo: Todo, index: number) => {
+        console.log(todo === todos.previous[index]);
+        return todo === todos.previous[index];
+      })
     ) {
+      console.log("shit");
       return;
     }
 
@@ -72,36 +78,47 @@ function setupTodos() {
       return;
     }
 
-    todos.current.forEach((todo: string, index: number): void => {
+    todos.current.forEach((todo: Todo, index: number): void => {
       if (
         typeof editIndex === "number" &&
         editIndex >= 0 &&
-        editIndex < todos.current.length
+        editIndex < todos.current.length &&
+        editIndex === index
       ) {
         const todoDivEl = document.createElement("div");
         todoDivEl!.setAttribute("class", "todo");
         const todoTextarea = document.createElement("textarea");
         todoTextarea!.setAttribute("class", "todo-textarea");
+        todoTextarea!.value = todo.getTodo();
+        todoTextarea!.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            // @ts-ignore
+            const todoText = todoTextarea!.value as string;
+            todos.current[index].updateTodo(todoText);
+            renderTodos();
+          } else if (event.key === "Escape") {
+            renderTodos();
+          }
+        });
+        const todoButtonsDivEl = document.createElement("div");
+        todoButtonsDivEl!.setAttribute("class", "todo-buttons");
         const todoUpdateBtn = document.createElement("button");
         todoUpdateBtn!.setAttribute("class", "btn");
         todoUpdateBtn!.textContent = "Update";
-        todoUpdateBtn!.addEventListener("click", () => {
+        todoUpdateBtn!.addEventListener("click", (): void => {
           // @ts-ignore
           const todoText = todoTextarea!.value as string;
-          if (todoText === todos.current[index]) {
-            return;
-          }
-
-          todos.previous = todos.current.slice();
-          setTodos(
-            (previous: Array<string>): Array<string> =>
-              previous.map((todo: string, i: number): string =>
-                index !== i ? todo : todoText,
-              ),
-          );
+          todos.current[index].updateTodo(todoText);
           renderTodos();
         });
-        todoDivEl.append(todoTextarea, todoUpdateBtn);
+        const todoCancelBtn = document.createElement("button");
+        todoCancelBtn!.setAttribute("class", "btn");
+        todoCancelBtn!.textContent = "Cancel";
+        todoCancelBtn!.addEventListener("click", (): void => {
+          renderTodos();
+        });
+        todoButtonsDivEl!.append(todoUpdateBtn, todoCancelBtn);
+        todoDivEl.append(todoTextarea, todoButtonsDivEl);
         todosDivEl!.append(todoDivEl);
         return;
       }
@@ -110,7 +127,7 @@ function setupTodos() {
       todoDivEl!.setAttribute("class", "todo");
       const todoTextPEl = document.createElement("p");
       todoTextPEl.setAttribute("class", "todo-text");
-      todoTextPEl!.textContent = todo;
+      todoTextPEl!.textContent = todo.getTodo();
       const todoButtonsDivEl = document.createElement("div");
       todoButtonsDivEl!.setAttribute("class", "todo-buttons");
       const todoEditBtn = document.createElement("button");
