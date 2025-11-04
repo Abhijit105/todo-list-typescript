@@ -1,4 +1,5 @@
 import Todos from "./todos.ts";
+import type { Todo } from "./todo.ts";
 
 const { getTodos, setTodos, pushTodo, renderTodos } = Todos;
 
@@ -17,7 +18,9 @@ const handleAddTodo = function (): void {
   }
 
   const todos = getTodos();
-  if (todos.includes(todoText)) {
+  if (
+    todos.map((todo: Todo): string => todo.getTodo().text).includes(todoText)
+  ) {
     return;
   }
 

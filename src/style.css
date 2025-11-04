@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
 :root {
   --bgprimary: #eee;
   --bgsecondary: #d7d7d7;
@@ -5,6 +11,10 @@
   --textsecondary: #555;
   --primary: #f573d4;
   --secondary: #61a4b2;
+}
+
+html {
+  box-sizing: border-box;
 }
 
 body {
@@ -92,6 +102,25 @@ main {
   border: 1px solid var(--textprimary);
   padding: 8px;
   border-radius: 8px;
+}
+
+.todo-details {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.todo-checkbox {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.todo-checkbox:checked {
+  border: 2px solid var(--primary);
 }
 
 .todo-text {

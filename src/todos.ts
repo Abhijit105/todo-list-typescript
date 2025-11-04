@@ -1,5 +1,5 @@
 import setupTodo from "./todo.ts";
-import type { Todo } from "./todo.ts";
+import type { T, Todo } from "./todo.ts";
 
 function setupTodos() {
   let todos: {
@@ -89,7 +89,7 @@ function setupTodos() {
         todoDivEl!.setAttribute("class", "todo");
         const todoTextarea = document.createElement("textarea");
         todoTextarea!.setAttribute("class", "todo-textarea");
-        todoTextarea!.value = todo.getTodo();
+        todoTextarea!.value = todo.getTodo().text;
         todoTextarea!.addEventListener("keydown", (event) => {
           if (event.key === "Enter") {
             // @ts-ignore
@@ -125,9 +125,33 @@ function setupTodos() {
 
       const todoDivEl = document.createElement("div");
       todoDivEl!.setAttribute("class", "todo");
+      const todoDetailsDivEl = document.createElement("div");
+      todoDetailsDivEl!.setAttribute("class", "todo-details");
+      const todoCheckbox = document.createElement("input");
+      todoCheckbox!.setAttribute("type", "checkbox");
+      todoCheckbox!.setAttribute("class", "todo-checkbox");
+      todoCheckbox!.checked = todo.getTodo().isCompleted;
+      todoCheckbox!.addEventListener("click", function (): void {
+        if (this.checked) {
+          todo.setTodo(
+            (previous: T): T => ({
+              ...previous,
+              isCompleted: true,
+            }),
+          );
+        } else {
+          todo.setTodo(
+            (previous: T): T => ({
+              ...previous,
+              isCompleted: false,
+            }),
+          );
+        }
+      });
       const todoTextPEl = document.createElement("p");
       todoTextPEl.setAttribute("class", "todo-text");
-      todoTextPEl!.textContent = todo.getTodo();
+      todoTextPEl!.textContent = todo.getTodo().text;
+      todoDetailsDivEl.append(todoCheckbox, todoTextPEl);
       const todoButtonsDivEl = document.createElement("div");
       todoButtonsDivEl!.setAttribute("class", "todo-buttons");
       const todoEditBtn = document.createElement("button");
@@ -141,7 +165,7 @@ function setupTodos() {
       todoDeleteBtn.textContent = "Delete";
       todoDeleteBtn.addEventListener("click", () => removeTodo(index));
       todoButtonsDivEl.append(todoEditBtn, todoDeleteBtn);
-      todoDivEl!.append(todoTextPEl, todoButtonsDivEl);
+      todoDivEl!.append(todoDetailsDivEl, todoButtonsDivEl);
       todosDivEl!.appendChild(todoDivEl);
     });
   }
